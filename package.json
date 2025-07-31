@@ -1,0 +1,37 @@
+{
+  "name": "ride-booking-api",
+  "version": "1.0.0",
+  "description": "A secure, scalable, and role-based backend API for a ride booking system.",
+  "main": "dist/server.js",
+  "scripts": {
+    "start": "node dist/server.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "express",
+    "mongoose",
+    "jwt",
+    "api",
+    "ride-booking"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "http-status": "^2.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.17.0",
+    "zod": "^4.0.14"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3"
+  }
+}

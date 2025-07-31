@@ -9,6 +9,7 @@ interface IEnvConfig {
   ADMIN_EMAIL: string;
   ADMIN_PASS: string;
   NODE_ENV: "development" | "production";
+  MONGO_TEST_URI?: string;
 }
 
 const requiredKeys: (keyof IEnvConfig)[] = [
@@ -19,6 +20,7 @@ const requiredKeys: (keyof IEnvConfig)[] = [
   "ADMIN_EMAIL",
   "ADMIN_PASS",
   "NODE_ENV",
+  "MONGO_TEST_URI",
 ];
 
 requiredKeys.forEach((key) => {
@@ -35,6 +37,7 @@ export const envVars: IEnvConfig = {
   ADMIN_EMAIL: process.env.ADMIN_EMAIL as string,
   ADMIN_PASS: process.env.ADMIN_PASS as string,
   NODE_ENV: process.env.NODE_ENV as "development" | "production",
+  MONGO_TEST_URI: process.env.MONGO_TEST_URI as string,
 };
 
 export default envVars;

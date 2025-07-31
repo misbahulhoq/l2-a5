@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
+import globalErrorHandler from "./middlewares/error.middleware";
 
 const app = express();
 
@@ -13,5 +14,8 @@ app.get("/", (req: Request, res: Response) => {
     message: "Welcome to the Ride Booking API!",
   });
 });
+
+// global error handler
+app.use(globalErrorHandler);
 
 export default app;

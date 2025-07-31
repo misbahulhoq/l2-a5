@@ -1,8 +1,11 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Model } from "mongoose";
 import bcrypt from "bcryptjs";
 import { TUser } from "./user.interface";
 import envVars from "../../config/env.config";
 
+interface UserModel extends Model<TUser> {
+  isUserExists(email: string): Promise<TUser | null>;
+}
 const userSchema = new Schema<TUser>(
   {
     name: {
@@ -49,4 +52,4 @@ userSchema.statics.isUserExists = async function (email: string) {
   return await this.findOne({ email });
 };
 
-export const User = model<TUser>("User", userSchema);
+export const User = model<TUser, UserModel>("User", userSchema);

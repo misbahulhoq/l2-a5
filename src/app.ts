@@ -1,6 +1,8 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import globalErrorHandler from "./middlewares/error.middleware";
+import seedAdmin from "./utils/seedAdmin";
+import envVars from "./config/env.config";
 
 const app = express();
 
@@ -14,6 +16,8 @@ app.get("/", (req: Request, res: Response) => {
     message: "Welcome to the Ride Booking API!",
   });
 });
+
+seedAdmin(envVars.ADMIN_EMAIL, envVars.ADMIN_PASS);
 
 // global error handler
 app.use(globalErrorHandler);

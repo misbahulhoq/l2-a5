@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { JwtPayload } from "jsonwebtoken";
 import httpStatus from "http-status";
 import sendResponse from "../../utils/sendResponse";
-import { RideServices } from "./rider.service";
+import { RideServices } from "./ride.service";
 import { AppError } from "../../utils/AppError";
 
 const requestRide = async (req: Request, res: Response, next: NextFunction) => {

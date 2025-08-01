@@ -25,4 +25,7 @@ router.patch("/:rideId/cancel", auth("rider"), RideControllers.cancelRide);
 
 // Route for a rider to get their ride history
 router.get("/my-history", auth("rider"), RideControllers.getMyRideHistory);
+
+// Route for an admin to get all rides in the system
+router.get("/", auth("admin"), RideControllers.getAllRides);
 export const RideRoutes = router;

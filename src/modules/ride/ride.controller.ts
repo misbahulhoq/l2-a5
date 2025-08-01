@@ -134,6 +134,21 @@ const getMyRideHistory = async (
   }
 };
 
+const getAllRides = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const result = await RideServices.getAllRidesFromDB();
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "All rides retrieved successfully",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const RideControllers = {
   requestRide,
   getAvailableRides,
@@ -141,4 +156,5 @@ export const RideControllers = {
   updateRideStatus,
   cancelRide,
   getMyRideHistory,
+  getAllRides,
 };

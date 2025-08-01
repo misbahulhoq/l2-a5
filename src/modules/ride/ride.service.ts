@@ -198,6 +198,11 @@ const getRiderHistoryFromDB = async (riderId: string) => {
   return result;
 };
 
+const getAllRidesFromDB = async () => {
+  const result = await Ride.find().populate("rider").populate("driver");
+  return result;
+};
+
 export const RideServices = {
   requestRideInDB,
   getAvailableRidesFromDB,
@@ -205,4 +210,5 @@ export const RideServices = {
   updateRideStatusInDB,
   cancelRideInDB,
   getRiderHistoryFromDB,
+  getAllRidesFromDB,
 };

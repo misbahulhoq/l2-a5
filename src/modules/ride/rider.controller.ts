@@ -3,7 +3,7 @@ import { JwtPayload } from "jsonwebtoken";
 import httpStatus from "http-status";
 import sendResponse from "../../utils/sendResponse";
 import { RideServices } from "./rider.service";
-import { get } from "mongoose";
+import { AppError } from "../../utils/AppError";
 
 const requestRide = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -61,8 +61,38 @@ const acceptRide = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const updateRideStatus = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { rideId } = req.params;
+    const { _id: driverId } = (req as JwtPayload).user;
+    const { status } = req.body;
+    if (!status) {
+      throw new AppError(httpStatus.BAD_REQUEST, "Status is required");
+    }
+
+    const result = await RideServices.updateRideStatusInDB(
+      rideId,
+      driverId,
+      status
+    );
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Ride status updated successfully",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 export const RideControllers = {
   requestRide,
   getAvailableRides,
   acceptRide,
+  updateRideStatus,
 };

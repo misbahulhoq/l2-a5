@@ -25,7 +25,14 @@ const rideSchema = new Schema<TRide>(
     destinationLocation: { type: locationSchema, required: true },
     status: {
       type: String,
-      enum: ["requested", "accepted", "in_transit", "completed", "cancelled"],
+      enum: [
+        "requested",
+        "accepted",
+        "picked_up",
+        "in_transit",
+        "completed",
+        "cancelled",
+      ],
       default: "requested",
     },
     fare: { type: Number },

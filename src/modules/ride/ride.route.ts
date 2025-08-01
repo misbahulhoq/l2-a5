@@ -10,8 +10,14 @@ router.get(
   auth("driver", "admin"),
   RideControllers.getAvailableRides
 );
-
 // Route for a driver to accept a ride request
 router.patch("/:rideId/accept", auth("driver"), RideControllers.acceptRide);
+
+// Route for a driver to update the status of their assigned ride
+router.patch(
+  "/:rideId/status",
+  auth("driver"),
+  RideControllers.updateRideStatus
+);
 
 export const RideRoutes = router;

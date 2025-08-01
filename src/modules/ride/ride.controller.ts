@@ -108,10 +108,37 @@ const cancelRide = async (req: Request, res: Response, next: NextFunction) => {
     next(error);
   }
 };
+
+const getMyRideHistory = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { _id: riderId } = (req as JwtPayload).user;
+
+    if (!riderId) {
+      throw new AppError(httpStatus.BAD_REQUEST, "Rider ID is required");
+    }
+
+    const result = await RideServices.getRiderHistoryFromDB(riderId);
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Ride history retrieved successfully",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const RideControllers = {
   requestRide,
   getAvailableRides,
   acceptRide,
   updateRideStatus,
   cancelRide,
+  getMyRideHistory,
 };

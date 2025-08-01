@@ -22,4 +22,7 @@ router.patch(
 
 // Route for a rider to cancel their ride request
 router.patch("/:rideId/cancel", auth("rider"), RideControllers.cancelRide);
+
+// Route for a rider to get their ride history
+router.get("/my-history", auth("rider"), RideControllers.getMyRideHistory);
 export const RideRoutes = router;

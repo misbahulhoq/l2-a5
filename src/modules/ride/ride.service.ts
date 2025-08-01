@@ -193,10 +193,16 @@ const cancelRideInDB = async (rideId: string, riderId: string) => {
   return updatedRide;
 };
 
+const getRiderHistoryFromDB = async (riderId: string) => {
+  const result = await Ride.find({ rider: riderId });
+  return result;
+};
+
 export const RideServices = {
   requestRideInDB,
   getAvailableRidesFromDB,
   acceptRideInDB,
   updateRideStatusInDB,
   cancelRideInDB,
+  getRiderHistoryFromDB,
 };

@@ -44,6 +44,7 @@ export const auth = (...requiredRoles: TUserRole[]) => {
       }
 
       // Attach user to the request object
+      // @ts-ignore
       req.user = decoded as JwtPayload;
       next();
     } catch (error) {

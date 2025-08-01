@@ -1,6 +1,6 @@
 import { Response } from "express";
 
-interface IResponse<T = null> {
+interface IResponse<T = null | any> {
   statusCode: number;
   success: boolean;
   message: string;

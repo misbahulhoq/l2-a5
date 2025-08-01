@@ -40,7 +40,7 @@ Follow these instructions to get a local copy up and running for development and
 1.  **Clone the repository:**
 
     ```bash
-    git clone <your-repository-url>
+    git clone https://github.com/misbahulhoq/ride-booking-api
     cd ride-booking-api
     ```
 

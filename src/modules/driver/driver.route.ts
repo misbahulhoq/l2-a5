@@ -16,4 +16,7 @@ router.patch(
   DriverControllers.updateMyAvailability
 );
 
+// Route for a driver to get their ride and earnings history
+router.get("/me/history", auth("driver"), DriverControllers.getMyHistory);
+
 export const DriverRoutes = router;

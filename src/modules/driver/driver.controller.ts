@@ -71,7 +71,31 @@ const updateMyAvailability = async (
   }
 };
 
+const getMyHistory = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { _id: driverId } = (req as JwtPayload).user;
+    if (!driverId) {
+      throw new AppError(httpStatus.BAD_REQUEST, "Driver ID is required");
+    }
+    const result = await DriverServices.getDriverHistoryFromDB(driverId);
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Driver history retrieved successfully",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const DriverControllers = {
   updateDriverApprovalStatus,
   updateMyAvailability,
+  getMyHistory,
 };

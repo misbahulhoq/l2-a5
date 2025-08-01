@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import globalErrorHandler from "./middlewares/error.middleware";
 import seedAdmin from "./utils/seedAdmin";
 import envVars from "./config/env.config";
@@ -10,6 +11,7 @@ const app = express();
 // Middlewares
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 app.use("/api/v1", routes);
 
 app.get("/", (req: Request, res: Response) => {

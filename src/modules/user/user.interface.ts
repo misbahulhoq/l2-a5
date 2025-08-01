@@ -1,4 +1,4 @@
-// src/modules/user/user.interface.ts
+export type TUserRole = "admin" | "rider" | "driver";
 
 export type TUser = {
   name: string;

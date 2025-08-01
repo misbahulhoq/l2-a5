@@ -1,10 +1,13 @@
-// src/modules/auth/auth.service.ts
+import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import httpStatus from "http-status";
+import bcrypt from "bcryptjs";
 import { TUser } from "../user/user.interface";
 import { User } from "../user/user.model";
 import { Driver } from "../driver/driver.model";
 import { AppError } from "../../utils/AppError";
+import envVars from "../../config/env.config";
+import { TLoginUser } from "./auth.interface";
 
 const signupUser = async (payload: TUser & { vehicleInfo?: object }) => {
   // Check if user already exists
@@ -58,6 +61,45 @@ const signupUser = async (payload: TUser & { vehicleInfo?: object }) => {
   return newUser;
 };
 
+const loginUser = async (payload: TLoginUser) => {
+  const user = await User.findOne({ email: payload.email }).select("+password");
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, "User not found");
+  }
+
+  // 2. Check if the user is blocked
+  if (user.status === "blocked") {
+    throw new AppError(httpStatus.FORBIDDEN, "This user is blocked!");
+  }
+
+  // 3. Check if the password is correct
+  const isPasswordMatch = await bcrypt.compare(
+    payload.password,
+    user.password as string
+  );
+  if (!isPasswordMatch) {
+    throw new AppError(httpStatus.UNAUTHORIZED, "Incorrect password");
+  }
+
+  const jwtPayload = {
+    _id: user._id,
+    email: user.email,
+    role: user.role,
+  };
+
+  // 5. Create token
+  const accessToken = jwt.sign(jwtPayload, envVars.JWT_SECRET as string);
+
+  // Get user data without the password
+  const userData = await User.findById(user._id);
+
+  return {
+    accessToken,
+    user: userData,
+  };
+};
+
 export const AuthServices = {
   signupUser,
+  loginUser,
 };

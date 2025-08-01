@@ -1,4 +1,3 @@
-// src/modules/auth/auth.controller.ts
 import { Request, Response, NextFunction } from "express";
 import httpStatus from "http-status";
 import { AuthServices } from "./auth.service";
@@ -56,6 +55,37 @@ const signupUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const loginUser = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      "Email and password are required."
+    );
+  }
+
+  const result = await AuthServices.loginUser(req.body);
+
+  const { accessToken, user } = result;
+
+  res.cookie("accessToken", accessToken, {
+    httpOnly: true,
+    secure: false,
+    sameSite: "lax",
+  });
+
+  res.status(httpStatus.OK).json({
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "User logged in successfully",
+    data: {
+      user,
+    },
+  });
+};
+
 export const AuthControllers = {
   signupUser,
+  loginUser,
 };

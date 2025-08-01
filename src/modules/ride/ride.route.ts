@@ -5,5 +5,13 @@ import { RideControllers } from "./rider.controller";
 const router = express.Router();
 
 router.post("/request", auth("rider"), RideControllers.requestRide);
+router.get(
+  "/available",
+  auth("driver", "admin"),
+  RideControllers.getAvailableRides
+);
+
+// Route for a driver to accept a ride request
+router.patch("/:rideId/accept", auth("driver"), RideControllers.acceptRide);
 
 export const RideRoutes = router;

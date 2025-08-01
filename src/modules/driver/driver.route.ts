@@ -9,4 +9,11 @@ router.patch(
   auth("admin"),
   DriverControllers.updateDriverApprovalStatus
 );
+
+router.patch(
+  "/me/availability",
+  auth("driver"), // Ensures only a logged-in driver can access this
+  DriverControllers.updateMyAvailability
+);
+
 export const DriverRoutes = router;

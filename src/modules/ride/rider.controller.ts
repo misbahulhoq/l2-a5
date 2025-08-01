@@ -3,10 +3,11 @@ import { JwtPayload } from "jsonwebtoken";
 import httpStatus from "http-status";
 import sendResponse from "../../utils/sendResponse";
 import { RideServices } from "./rider.service";
+import { get } from "mongoose";
 
 const requestRide = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { _id: riderId } = req.user as JwtPayload;
+    const { _id: riderId } = (req as JwtPayload).user;
     const rideData = req.body;
 
     const result = await RideServices.requestRideInDB(riderId, rideData);
@@ -22,6 +23,46 @@ const requestRide = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const getAvailableRides = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { _id: driverId } = (req as JwtPayload).user;
+    const result = await RideServices.getAvailableRidesFromDB(driverId);
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Available rides retrieved successfully",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const acceptRide = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { rideId } = req.params;
+    const { _id: driverId } = (req as JwtPayload).user;
+
+    const result = await RideServices.acceptRideInDB(rideId, driverId);
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Ride accepted successfully",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const RideControllers = {
   requestRide,
+  getAvailableRides,
+  acceptRide,
 };

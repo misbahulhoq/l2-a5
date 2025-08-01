@@ -11,6 +11,17 @@ const updateDriverApprovalStatusInDB = async (
   return result;
 };
 
+const updateDriverAvailabilityInDB = async (
+  userId: string,
+  payload: Partial<TDriver>
+) => {
+  const result = await Driver.findOneAndUpdate({ user: userId }, payload, {
+    new: true,
+  });
+  return result;
+};
+
 export const DriverServices = {
   updateDriverApprovalStatusInDB,
+  updateDriverAvailabilityInDB,
 };

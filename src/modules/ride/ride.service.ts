@@ -157,9 +157,46 @@ const updateRideStatusInDB = async (
   return updatedRide;
 };
 
+const cancelRideInDB = async (rideId: string, riderId: string) => {
+  // Find the ride
+  const ride = await Ride.findById(rideId);
+  if (!ride) {
+    throw new AppError(httpStatus.NOT_FOUND, "Ride not found.");
+  }
+
+  // 1. Check if the logged-in rider is the one who requested the ride
+  if (ride.rider?.toString() !== riderId) {
+    throw new AppError(
+      httpStatus.FORBIDDEN,
+      "You are not authorized to cancel this ride."
+    );
+  }
+
+  // 2. Check if the ride is in a cancellable state
+  if (!["requested", "accepted"].includes(ride.status)) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      `This ride cannot be cancelled as its status is "${ride.status}".`
+    );
+  }
+
+  // 3. Update the status to 'cancelled' and log the history
+  const updatedRide = await Ride.findByIdAndUpdate(
+    rideId,
+    {
+      status: "cancelled",
+      $push: { history: { status: "cancelled", timestamp: new Date() } },
+    },
+    { new: true }
+  );
+
+  return updatedRide;
+};
+
 export const RideServices = {
   requestRideInDB,
   getAvailableRidesFromDB,
   acceptRideInDB,
   updateRideStatusInDB,
+  cancelRideInDB,
 };

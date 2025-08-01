@@ -20,4 +20,6 @@ router.patch(
   RideControllers.updateRideStatus
 );
 
+// Route for a rider to cancel their ride request
+router.patch("/:rideId/cancel", auth("rider"), RideControllers.cancelRide);
 export const RideRoutes = router;

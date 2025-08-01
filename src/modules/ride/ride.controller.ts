@@ -90,9 +90,28 @@ const updateRideStatus = async (
     next(error);
   }
 };
+
+const cancelRide = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { rideId } = req.params;
+    const { _id: riderId } = (req as JwtPayload).user;
+
+    const result = await RideServices.cancelRideInDB(rideId, riderId);
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Ride cancelled successfully",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 export const RideControllers = {
   requestRide,
   getAvailableRides,
   acceptRide,
   updateRideStatus,
+  cancelRide,
 };

@@ -9,18 +9,18 @@ interface IEnvConfig {
   SALT_ROUNDS: number | string;
   ADMIN_EMAIL: string;
   ADMIN_PASS: string;
-  NODE_ENV: "development" | "production";
+  NODE_ENV?: "development" | "production";
   MONGO_TEST_URI?: string;
 }
 
 const requiredKeys: (keyof IEnvConfig)[] = [
-  "PORT",
+  // "PORT",
   "MONGO_URI",
   "JWT_SECRET",
   "SALT_ROUNDS",
   "ADMIN_EMAIL",
   "ADMIN_PASS",
-  "NODE_ENV",
+  // "NODE_ENV",
   "MONGO_TEST_URI",
   "JWT_EXPIRES_IN",
 ];

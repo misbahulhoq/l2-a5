@@ -85,7 +85,20 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
         user: userData,
     };
 });
+const getCurrentUser = (accessToken) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        if (!accessToken)
+            throw new AppError_1.AppError(400, "Invalid request");
+        const decoded = jsonwebtoken_1.default.verify(accessToken, env_config_1.default.JWT_SECRET);
+        const user = yield user_model_1.User.findById(decoded._id);
+        return user;
+    }
+    catch (err) {
+        throw new AppError_1.AppError(400, err.message || "Something went wrong.");
+    }
+});
 exports.AuthServices = {
     signupUser,
     loginUser,
+    getCurrentUser,
 };

@@ -103,7 +103,7 @@ const getCurrentUser = async (accessToken: string) => {
   try {
     if (!accessToken) throw new AppError(400, "Invalid request");
     const decoded = jwt.verify(accessToken, envVars.JWT_SECRET) as JwtPayload;
-    const user = await User.findById(decoded.id);
+    const user = await User.findById(decoded._id);
     return user;
   } catch (err: any) {
     throw new AppError(400, err.message || "Something went wrong.");

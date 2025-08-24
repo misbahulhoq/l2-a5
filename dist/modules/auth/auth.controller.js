@@ -16,6 +16,7 @@ exports.AuthControllers = void 0;
 const http_status_1 = __importDefault(require("http-status"));
 const auth_service_1 = require("./auth.service");
 const AppError_1 = require("../../utils/AppError");
+const sendResponse_1 = __importDefault(require("../../utils/sendResponse"));
 const signup = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name, email, password, role, vehicleInfo } = req.body;
@@ -86,8 +87,18 @@ const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         message: "Logout successful.",
     });
 });
+const getCurrentUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield auth_service_1.AuthServices.getCurrentUser(req.cookies.accessToken);
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        statusCode: 200,
+        message: "User info retrieved successfully.",
+        data: { user },
+    });
+});
 exports.AuthControllers = {
     signup,
     login,
     logout,
+    getCurrentUser,
 };

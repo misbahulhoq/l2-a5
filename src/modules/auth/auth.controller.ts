@@ -2,6 +2,8 @@ import { Request, Response, NextFunction } from "express";
 import httpStatus from "http-status";
 import { AuthServices } from "./auth.service";
 import { AppError } from "../../utils/AppError";
+import { success } from "zod";
+import sendResponse from "../../utils/sendResponse";
 
 const signup = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -97,8 +99,19 @@ const logout = async (req: Request, res: Response) => {
   });
 };
 
+const getCurrentUser = async (req: Request, res: Response) => {
+  const user = await AuthServices.getCurrentUser(req.cookies.accessToken);
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "User info retrieved successfully.",
+    data: { user },
+  });
+};
+
 export const AuthControllers = {
   signup,
   login,
   logout,
+  getCurrentUser,
 };

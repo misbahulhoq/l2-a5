@@ -13,7 +13,18 @@ const routes_1 = __importDefault(require("./routes"));
 const app = (0, express_1.default)();
 // Middlewares
 app.use(express_1.default.json());
-app.use((0, cors_1.default)());
+app.use((0, cors_1.default)({
+    origin: env_config_1.default.FRONT_END_URL,
+    credentials: true,
+    allowedHeaders: [
+        "Content-Type",
+        "Authorization",
+        "Access-Control-Allow-Origin",
+        "Access-Control-Allow-Credentials",
+        "Access-Control-Allow-Headers",
+        "accessToken",
+    ],
+}));
 app.use((0, cookie_parser_1.default)());
 app.use("/api/v1", routes_1.default);
 app.get("/", (req, res) => {

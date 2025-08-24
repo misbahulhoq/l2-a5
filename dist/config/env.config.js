@@ -16,6 +16,7 @@ const requiredKeys = [
     // "NODE_ENV",
     "MONGO_TEST_URI",
     "JWT_EXPIRES_IN",
+    "FRONT_END_URL",
 ];
 requiredKeys.forEach((key) => {
     if (!process.env[key]) {
@@ -32,5 +33,6 @@ exports.envVars = {
     ADMIN_PASS: process.env.ADMIN_PASS,
     NODE_ENV: process.env.NODE_ENV,
     MONGO_TEST_URI: process.env.MONGO_TEST_URI,
+    FRONT_END_URL: process.env.FRONT_END_URL,
 };
 exports.default = exports.envVars;

@@ -3,7 +3,7 @@ import httpStatus from "http-status";
 import { AuthServices } from "./auth.service";
 import { AppError } from "../../utils/AppError";
 
-const signupUser = async (req: Request, res: Response, next: NextFunction) => {
+const signup = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { name, email, password, role, vehicleInfo } = req.body;
     // Check if name, email, password, and role are provided
@@ -43,7 +43,6 @@ const signupUser = async (req: Request, res: Response, next: NextFunction) => {
     // if inputs are okay, create a new user.
     const userData = req.body;
     const result = await AuthServices.signupUser(userData);
-
     res.status(httpStatus.CREATED).json({
       success: true,
       statusCode: httpStatus.CREATED,
@@ -55,7 +54,7 @@ const signupUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const loginUser = async (req: Request, res: Response) => {
+const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -78,14 +77,28 @@ const loginUser = async (req: Request, res: Response) => {
   res.status(httpStatus.OK).json({
     success: true,
     statusCode: httpStatus.OK,
-    message: "User logged in successfully",
+    message: "Login successful.",
     data: {
       user,
     },
   });
 };
 
+const logout = async (req: Request, res: Response) => {
+  res.clearCookie("accessToken", {
+    httpOnly: true,
+    secure: false,
+    sameSite: "lax",
+  });
+  res.status(httpStatus.OK).json({
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Logout successful.",
+  });
+};
+
 export const AuthControllers = {
-  signupUser,
-  loginUser,
+  signup,
+  login,
+  logout,
 };

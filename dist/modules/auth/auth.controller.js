@@ -16,7 +16,7 @@ exports.AuthControllers = void 0;
 const http_status_1 = __importDefault(require("http-status"));
 const auth_service_1 = require("./auth.service");
 const AppError_1 = require("../../utils/AppError");
-const signupUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const signup = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name, email, password, role, vehicleInfo } = req.body;
         // Check if name, email, password, and role are provided
@@ -53,7 +53,7 @@ const signupUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         next(error);
     }
 });
-const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
     if (!email || !password) {
         throw new AppError_1.AppError(http_status_1.default.BAD_REQUEST, "Email and password are required.");
@@ -68,13 +68,26 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.status(http_status_1.default.OK).json({
         success: true,
         statusCode: http_status_1.default.OK,
-        message: "User logged in successfully",
+        message: "Login successful.",
         data: {
             user,
         },
     });
 });
+const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.clearCookie("accessToken", {
+        httpOnly: true,
+        secure: false,
+        sameSite: "lax",
+    });
+    res.status(http_status_1.default.OK).json({
+        success: true,
+        statusCode: http_status_1.default.OK,
+        message: "Logout successful.",
+    });
+});
 exports.AuthControllers = {
-    signupUser,
-    loginUser,
+    signup,
+    login,
+    logout,
 };

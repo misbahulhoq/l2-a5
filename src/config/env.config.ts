@@ -11,6 +11,7 @@ interface IEnvConfig {
   ADMIN_PASS: string;
   NODE_ENV?: "development" | "production";
   MONGO_TEST_URI?: string;
+  FRONT_END_URL: string;
 }
 
 const requiredKeys: (keyof IEnvConfig)[] = [
@@ -23,6 +24,7 @@ const requiredKeys: (keyof IEnvConfig)[] = [
   // "NODE_ENV",
   "MONGO_TEST_URI",
   "JWT_EXPIRES_IN",
+  "FRONT_END_URL",
 ];
 
 requiredKeys.forEach((key) => {
@@ -41,6 +43,7 @@ export const envVars: IEnvConfig = {
   ADMIN_PASS: process.env.ADMIN_PASS as string,
   NODE_ENV: process.env.NODE_ENV as "development" | "production",
   MONGO_TEST_URI: process.env.MONGO_TEST_URI as string,
+  FRONT_END_URL: process.env.FRONT_END_URL as string,
 };
 
 export default envVars;

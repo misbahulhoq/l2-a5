@@ -3,7 +3,6 @@ import { Types } from "mongoose";
 export type TVehicleInfo = {
   model: string;
   licensePlate: string;
-  color: string;
 };
 
 export type TDriver = {

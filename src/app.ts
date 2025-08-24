@@ -10,7 +10,20 @@ const app = express();
 
 // Middlewares
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: envVars.FRONT_END_URL,
+    credentials: true,
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "Access-Control-Allow-Origin",
+      "Access-Control-Allow-Credentials",
+      "Access-Control-Allow-Headers",
+      "accessToken",
+    ],
+  })
+);
 app.use(cookieParser());
 app.use("/api/v1", routes);
 

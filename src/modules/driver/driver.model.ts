@@ -12,7 +12,6 @@ const driverSchema = new Schema<TDriver>(
     vehicleInfo: {
       model: { type: String, required: true },
       licensePlate: { type: String, required: true, unique: true },
-      color: { type: String, required: true },
     },
     approvalStatus: {
       type: String,

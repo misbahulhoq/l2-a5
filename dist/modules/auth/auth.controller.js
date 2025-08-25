@@ -64,7 +64,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.cookie("accessToken", accessToken, {
         httpOnly: true,
         secure: true,
-        sameSite: "lax",
+        sameSite: "none",
     });
     res.status(http_status_1.default.OK).json({
         success: true,
@@ -79,7 +79,7 @@ const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.clearCookie("accessToken", {
         httpOnly: true,
         secure: true,
-        sameSite: "lax",
+        sameSite: "none",
     });
     res.status(http_status_1.default.OK).json({
         success: true,

@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import httpStatus from "http-status";
 import { AuthServices } from "./auth.service";
 import { AppError } from "../../utils/AppError";
-import { success } from "zod";
 import sendResponse from "../../utils/sendResponse";
 
 const signup = async (req: Request, res: Response, next: NextFunction) => {
@@ -76,7 +75,7 @@ const login = async (req: Request, res: Response) => {
     sameSite: "none",
   });
 
-  res.status(httpStatus.OK).json({
+  sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
     message: "Login successful.",

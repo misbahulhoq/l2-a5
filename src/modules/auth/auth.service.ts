@@ -64,7 +64,7 @@ const signupUser = async (payload: TUser & { vehicleInfo?: object }) => {
 const loginUser = async (payload: TLoginUser) => {
   const user = await User.findOne({ email: payload.email }).select("+password");
   if (!user) {
-    throw new AppError(httpStatus.NOT_FOUND, "User not found");
+    throw new AppError(httpStatus.NOT_FOUND, "Invalid email or password.");
   }
 
   // 2. Check if the user is blocked
@@ -78,7 +78,7 @@ const loginUser = async (payload: TLoginUser) => {
     user.password as string
   );
   if (!isPasswordMatch) {
-    throw new AppError(httpStatus.UNAUTHORIZED, "Incorrect password");
+    throw new AppError(httpStatus.UNAUTHORIZED, "Invalid email or password.");
   }
 
   const jwtPayload = {

@@ -60,7 +60,7 @@ const signupUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
 const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield user_model_1.User.findOne({ email: payload.email }).select("+password");
     if (!user) {
-        throw new AppError_1.AppError(http_status_1.default.NOT_FOUND, "User not found");
+        throw new AppError_1.AppError(http_status_1.default.NOT_FOUND, "Invalid email or password.");
     }
     // 2. Check if the user is blocked
     if (user.status === "blocked") {
@@ -69,7 +69,7 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     // 3. Check if the password is correct
     const isPasswordMatch = yield bcryptjs_1.default.compare(payload.password, user.password);
     if (!isPasswordMatch) {
-        throw new AppError_1.AppError(http_status_1.default.UNAUTHORIZED, "Incorrect password");
+        throw new AppError_1.AppError(http_status_1.default.UNAUTHORIZED, "Invalid email or password.");
     }
     const jwtPayload = {
         _id: user._id,

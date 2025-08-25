@@ -8,12 +8,9 @@ export const globalErrorHandler = (
   response: Response,
   next: NextFunction
 ) => {
-  let message = error.message || "Internal server error";
+  let message = "Internal server error";
   let statusCode = error.statusCode || 500;
   let stack = error.stack || [];
-
-  if (envVars.NODE_ENV === "development") {
-  }
 
   if (error instanceof AppError && error.isOperational) {
     message = error.message;

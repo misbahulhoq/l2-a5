@@ -66,7 +66,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         secure: true,
         sameSite: "none",
     });
-    res.status(http_status_1.default.OK).json({
+    (0, sendResponse_1.default)(res, {
         success: true,
         statusCode: http_status_1.default.OK,
         message: "Login successful.",

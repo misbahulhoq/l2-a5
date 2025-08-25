@@ -23,7 +23,8 @@ export const globalErrorHandler = (
   response.status(statusCode).json({
     success: false,
     message,
-    stack: envVars.NODE_ENV === "development" ? stack : [],
+    // stack: envVars.NODE_ENV === "development" ? stack : [],
+    stack,
   });
 };
 

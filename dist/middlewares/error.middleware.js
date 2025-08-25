@@ -19,7 +19,8 @@ const globalErrorHandler = (error, request, response, next) => {
     response.status(statusCode).json({
         success: false,
         message,
-        stack: env_config_1.default.NODE_ENV === "development" ? stack : [],
+        // stack: envVars.NODE_ENV === "development" ? stack : [],
+        stack,
     });
 };
 exports.globalErrorHandler = globalErrorHandler;

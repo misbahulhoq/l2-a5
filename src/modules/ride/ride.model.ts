@@ -21,8 +21,8 @@ const rideSchema = new Schema<TRide>(
   {
     rider: { type: Schema.Types.ObjectId, ref: "User", required: true },
     driver: { type: Schema.Types.ObjectId, ref: "User", default: null },
-    pickupLocation: { type: locationSchema, required: true },
-    destinationLocation: { type: locationSchema, required: true },
+    pickupLocation: { type: String, required: true },
+    destinationLocation: { type: String, required: true },
     status: {
       type: String,
       enum: [
@@ -37,6 +37,11 @@ const rideSchema = new Schema<TRide>(
     },
     fare: { type: Number },
     history: [rideHistorySchema],
+    paymentMethod: {
+      type: String,
+      enum: ["cash", "card"],
+      required: true,
+    },
   },
   {
     timestamps: true,

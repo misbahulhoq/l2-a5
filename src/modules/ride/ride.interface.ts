@@ -17,13 +17,17 @@ export type TRideHistory = {
   status: TRideStatus;
   timestamp: Date;
 };
-
+enum PaymentMethod {
+  Cash = "cash",
+  Card = "card",
+}
 export type TRide = {
   rider: Types.ObjectId;
   driver: Types.ObjectId | null;
-  pickupLocation: TLocation;
-  destinationLocation: TLocation;
+  pickupLocation: string;
+  destinationLocation: string;
   status: TRideStatus;
   fare?: number;
   history: TRideHistory[];
+  paymentMethod: PaymentMethod;
 };
